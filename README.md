@@ -1,6 +1,8 @@
-<<<<<<< HEAD
-# EG
-Evolutionary Games - Mind over Matter
+
+# Evolutionary Games - Mind over Matter
 =======
-# EvolutionaryGame
->>>>>>> 8326fbce81fae55b9fcaeaa213420dfa2ef9ffd1
+# Divine Comedy
+This is the second coursework for the subject of Computer Games Programming
+by ALberto Aleman Muñoz, Reka Hegedus and Daniel Gonzalez Fajardo
+
+
