@@ -107,7 +107,7 @@ NavMeshSettings:
     serializedVersion: 2
     agentTypeID: 0
     agentRadius: 0.5
-    agentHeight: 2
+    agentHeight: 1
     agentSlope: 45
     agentClimb: 0.4
     ledgeDropHeight: 0
@@ -358,7 +358,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 8
+  m_StaticEditorFlags: 40
   m_IsActive: 1
 --- !u!64 &355193372
 MeshCollider:
@@ -8384,7 +8384,7 @@ PrefabInstance:
     - target: {fileID: 5933635817166377617, guid: 296ab06c46af343749dc8e2e14865069,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.69
+      value: 41.28
       objectReference: {fileID: 0}
     - target: {fileID: 5933635817166377617, guid: 296ab06c46af343749dc8e2e14865069,
         type: 3}
@@ -8394,7 +8394,7 @@ PrefabInstance:
     - target: {fileID: 5933635817166377617, guid: 296ab06c46af343749dc8e2e14865069,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10.48
+      value: 25.33
       objectReference: {fileID: 0}
     - target: {fileID: 5933635817166377617, guid: 296ab06c46af343749dc8e2e14865069,
         type: 3}
