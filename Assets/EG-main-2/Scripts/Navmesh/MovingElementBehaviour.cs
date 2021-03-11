@@ -7,7 +7,7 @@ public class MovingElementBehaviour : MonoBehaviour
 {
     int intDest = 0;
     new Vector3[] destinations; 
-    NavMeshAgent agent;   
+    private NavMeshAgent agent;   
     void Start () {
         agent = GetComponent<NavMeshAgent>();
         destinations = new [] {new Vector3(22.09f,transform.position.y,24.68f),new Vector3(8.519f,transform.position.y,39.48f),new Vector3(41.22f,transform.position.y,24.49f),new Vector3(7.69f,transform.position.y,10.48f)};     
