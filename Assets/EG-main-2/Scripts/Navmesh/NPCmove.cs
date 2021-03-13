@@ -11,10 +11,10 @@ public class NPCmove : MonoBehaviour
     private NPC npc = NPC.walk;
     public Transform[] goal;
     private int whereTo = 0;
-    private Animator anim;
+    private Animation anim;
     private bool firedOn = false;
     public float tooClose = 60.0f;
-   
+    private Animator anima;
 
 
 
@@ -27,7 +27,8 @@ public class NPCmove : MonoBehaviour
         //get the navMesh controller
         agent = GetComponent<NavMeshAgent>();
         //get access to animation
-        // anim = GetComponentInChildren<Animator>();
+        anim = GetComponent<Animation>();
+        anima = player.GetComponentInChildren<Animator>();
         //start patrol
         walkNow();
 
@@ -76,16 +77,16 @@ public class NPCmove : MonoBehaviour
     }
     private void walkNow()
     {
-
+        anim.Play("idle");
             // go back if no patrol locations given
-            if (goal.Length == 0)
-                return;
+        if (goal.Length == 0)
+           return;
 
             // gost's current destination
-            agent.destination = goal[whereTo].position;
-
-            // pick next point providing continouity 
-            whereTo = (whereTo + 1) % goal.Length;
+        agent.destination = goal[whereTo].position;
+     
+        // pick next point providing continouity 
+        whereTo = (whereTo + 1) % goal.Length;
 
     }
 
@@ -95,11 +96,12 @@ public class NPCmove : MonoBehaviour
         //check for distance between them
         float run = Vector3.Distance(transform.position, player.transform.position);
         // if it is less then 30f then ...
+       // anim.Play("run");
         if (run < 30.0f)
         {
             //animation
-            // anim.Play("munch");
-
+            anim.Play("attack");
+            anima.SetTrigger("hopp");
         }
     }
     public enum NPC { walk, attack }
