@@ -5212,6 +5212,8 @@ MonoBehaviour:
   rb: {fileID: 7606809636795485169}
   camera: {fileID: 0}
   stroll: {fileID: 7606809636142933949}
+  firePrefab: {fileID: 0}
+  fireEnd: {fileID: 0}
 --- !u!1 &7606809636888527005
 GameObject:
   m_ObjectHideFlags: 0
@@ -5230,7 +5232,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7606809636888527006
 Transform:
   m_ObjectHideFlags: 0

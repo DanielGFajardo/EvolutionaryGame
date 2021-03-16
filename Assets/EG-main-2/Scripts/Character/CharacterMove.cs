@@ -13,11 +13,14 @@ public class CharacterMove : MonoBehaviour
     private float turnSmooth;
     public Transform camera;
     public GameObject stroll;
-
+    public Rigidbody firePrefab;
+    public Transform fireEnd;
+    private Animator anim;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        anim= gameObject.GetComponentInChildren<Animator>();
     }
 
     //Controls the movement of the character
@@ -25,6 +28,7 @@ public class CharacterMove : MonoBehaviour
     {
         Move();
         Jump();
+       
     }
 
     void Move()
@@ -56,7 +60,7 @@ public class CharacterMove : MonoBehaviour
         //sound
         stroll.SetActive(true);
         //animation
-        //animation.SetTrigger("move");
+        anim.SetTrigger("run");
         
 
         }
@@ -64,6 +68,7 @@ public class CharacterMove : MonoBehaviour
         {
             //stop sound
             stroll.SetActive(false);
+            anim.SetTrigger("stop");
         }
     }
     void Jump()
@@ -73,9 +78,24 @@ public class CharacterMove : MonoBehaviour
         {
             canjump = false;
             rb.AddForce(0, 8, 0, ForceMode.Impulse);
-
+            anim.SetTrigger("jump");
         }
 
+    }
+
+    void OnTriggerStay(Collider col)
+    {
+        if (col.tag == "floor" && Input.GetKey(KeyCode.G))
+        {
+
+            anim.SetTrigger("attack");
+            Rigidbody fireInstance;
+            //the instance will create the prfab at the given gameObject position 
+            fireInstance = Instantiate(firePrefab, fireEnd.position, fireEnd.rotation) as Rigidbody;
+            //with direction and force
+            fireInstance.AddForce(fireEnd.forward * 1000);
+            
+        }
     }
     //When the character reaches the "floor" after jumping can jump is set to true and the jump action is replaced by running or idle
     private void OnTriggerEnter(Collider other)
