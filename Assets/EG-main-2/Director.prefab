@@ -44,4 +44,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   block1: {fileID: 6651717642369138672, guid: a4ad78ec3905142458acbcf5f869466b, type: 3}
+  fountain: {fileID: 4979889793059171501, guid: 5f197457b7502459fbd3c89c0f9ab508,
+    type: 3}
   dimention: 50
