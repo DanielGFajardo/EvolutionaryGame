@@ -50,7 +50,7 @@ public class MapVirtualization : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*
+        
         if(Activated){
             foreach (Light light in lights){
                 light.intensity=0;
@@ -63,6 +63,6 @@ public class MapVirtualization : MonoBehaviour
                 Activated = true;
             }
         }
-        */
+        
     }
 }
