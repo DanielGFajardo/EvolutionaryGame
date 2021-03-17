@@ -22,7 +22,6 @@ public class MapVirtualization : MonoBehaviour
     void digitalizeRandomMap(){
         DirectoryInfo dir = new DirectoryInfo("Assets/EG-main-2/Scripts/Maps/maps");
         FileInfo[] info = dir.GetFiles("*.*");
-        Debug.Log(info.Length/2);
         int targetMap = Random.Range(1,info.Length/2);
         string data = System.IO.File.ReadAllText ("Assets/EG-main-2/Scripts/Maps/maps/map"+targetMap.ToString()+".csv");
         mapValues = data.Split(new char [] {',' , '\n' }, StringSplitOptions.RemoveEmptyEntries);
@@ -36,7 +35,6 @@ public class MapVirtualization : MonoBehaviour
         List<Light> listOfLights = new List<Light>();
         for (int i = 0; i <dimention; i++){
             for (int a = 0; a <dimention; a++){
-                Debug.Log(mapValues[i*50+a]);
                 if(mapValues[i*50+a] == "0.0"){
                     GameObject blockL1 = Instantiate(block1, new Vector3(i,0,a), block1.transform.rotation) as GameObject;
                     GameObject blockL2 = Instantiate(block1, new Vector3(i,1,a), block1.transform.rotation) as GameObject;
@@ -60,10 +58,13 @@ public class MapVirtualization : MonoBehaviour
     }
 
     IEnumerator MapChange(){
+        Debug.Log("Map Change");
+        Coroutine co;
         for(int i = 1;i<4;i++){
-            StartCoroutine(BeepFrequency(1*i));
+            Debug.Log(i);
+            co = StartCoroutine(BeepFrequency(1*i));
             yield return new WaitForSeconds(10);
-            StopAllCoroutines();
+            StopCoroutine(co);
         }
         digitalizeRandomMap();
     }
@@ -75,15 +76,15 @@ public class MapVirtualization : MonoBehaviour
                 foreach (Light light in lights){
                     light.intensity=0;
                     Activated = false;
-                    yield return new WaitForSeconds(0.1f);
                 }
+                yield return new WaitForSeconds(0.2f);
             }
             else{
                 foreach (Light light in lights){
                     light.intensity=5;
                     Activated = true;
                 }
-                yield return new WaitForSeconds((float)(1-(frequency*0.1f)));
+                yield return new WaitForSeconds((float)(1-(frequency*0.2f)));
             }
         }
     }
