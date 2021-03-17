@@ -11,12 +11,14 @@ public class MapVirtualization : MonoBehaviour
     public GameObject block1;
     public GameObject fountain;
     private Light[] lights;
+    private GameObject[] cubes;
     public int dimention; 
     // Start is called before the first frame update
     void Start()
     {
         digitalizeRandomMap();
-        StartCoroutine(MapChange());
+        StartCoroutine(IncreaseLight(40,5));
+        //StartCoroutine(MapChange());
     }
 
     void digitalizeRandomMap(){
@@ -33,6 +35,7 @@ public class MapVirtualization : MonoBehaviour
         //    }
         //}
         List<Light> listOfLights = new List<Light>();
+        List<GameObject> listOfCubes = new List<GameObject>();
         for (int i = 0; i <dimention; i++){
             for (int a = 0; a <dimention; a++){
                 if(mapValues[i*50+a] == "0.0"){
@@ -40,6 +43,8 @@ public class MapVirtualization : MonoBehaviour
                     GameObject blockL2 = Instantiate(block1, new Vector3(i,1,a), block1.transform.rotation) as GameObject;
                     listOfLights.Add(blockL1.transform.GetChild(6).GetComponentInChildren<Light>());
                     listOfLights.Add(blockL2.transform.GetChild(6).GetComponentInChildren<Light>());
+                    listOfCubes.Add(blockL1);
+                    listOfCubes.Add(blockL2);
                 }
                 else if(mapValues[i*50+a] == "3.0"){
                     GameObject fountain1 = Instantiate(fountain, new Vector3(i,-0.81f,a),fountain.transform.rotation) as GameObject;
@@ -47,6 +52,7 @@ public class MapVirtualization : MonoBehaviour
             }
         }
         lights = listOfLights.ToArray();
+        cubes = listOfCubes.ToArray();
     }
 
     // Update is called once per frame
@@ -86,6 +92,30 @@ public class MapVirtualization : MonoBehaviour
                 }
                 yield return new WaitForSeconds((float)(1-(frequency*0.2f)));
             }
+        }
+    }
+    IEnumerator IncreaseLight(int LimitUp,int LimitLow){
+        Debug.Log("Increase");
+        for(int i = 1;i<LimitUp;i++){
+            foreach (Light light in lights){
+                light.range=light.range+1;
+                light.intensity=light.intensity+1;
+            }
+            yield return new WaitForSeconds(0.075f);
+        }
+        Light[] lightsOld=lights;
+        GameObject[] cubesOld=cubes;
+        digitalizeRandomMap();
+        Debug.Log("Decrease");
+        for(int i = 40;i>LimitLow-1;i--){
+            foreach (Light light in lightsOld){
+                light.range=light.range-1;
+                light.intensity=light.intensity-1;
+            }
+            yield return new WaitForSeconds(0.075f);
+        }
+        foreach (GameObject cube in cubesOld){
+            Destroy(cube);
         }
     }
 }
