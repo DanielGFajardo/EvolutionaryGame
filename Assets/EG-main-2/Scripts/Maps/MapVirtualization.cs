@@ -12,10 +12,14 @@ public class MapVirtualization : MonoBehaviour
     public GameObject fountain;
     private Light[] lights;
     public int dimention; 
-    public bool Activated;
     // Start is called before the first frame update
     void Start()
     {
+        digitalizeRandomMap();
+        StartCoroutine(MapChange());
+    }
+
+    void digitalizeRandomMap(){
         DirectoryInfo dir = new DirectoryInfo("Assets/EG-main-2/Scripts/Maps/maps");
         FileInfo[] info = dir.GetFiles("*.*");
         Debug.Log(info.Length/2);
@@ -51,18 +55,36 @@ public class MapVirtualization : MonoBehaviour
     void Update()
     {
         
-        if(Activated){
-            foreach (Light light in lights){
-                light.intensity=0;
-                Activated = false;
-            }
-        }
-        else{
-            foreach (Light light in lights){
-                light.intensity=5;
-                Activated = true;
-            }
-        }
         
+        
+    }
+
+    IEnumerator MapChange(){
+        for(int i = 1;i<4;i++){
+            StartCoroutine(BeepFrequency(1*i));
+            yield return new WaitForSeconds(10);
+            StopAllCoroutines();
+        }
+        digitalizeRandomMap();
+    }
+
+    IEnumerator BeepFrequency(int frequency){
+        bool Activated = true;
+        while(true){
+            if(Activated){
+                foreach (Light light in lights){
+                    light.intensity=0;
+                    Activated = false;
+                    yield return new WaitForSeconds(0.1f);
+                }
+            }
+            else{
+                foreach (Light light in lights){
+                    light.intensity=5;
+                    Activated = true;
+                }
+                yield return new WaitForSeconds((float)(1-(frequency*0.1f)));
+            }
+        }
     }
 }
