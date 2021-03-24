@@ -20,9 +20,15 @@ TagManager:
   - whatIsGround
   - Player
   - Environment
+<<<<<<< HEAD
   - Minimap
   - 
   - 
+=======
+  - m1
+  - m2
+  - m3
+>>>>>>> b99c02947635df689dd52d9cd580756db5d5a413
   - 
   - 
   - 
