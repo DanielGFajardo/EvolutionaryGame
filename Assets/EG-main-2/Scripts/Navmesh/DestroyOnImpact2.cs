@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DestroyonImpact : MonoBehaviour
+public class DestroyOnImpact2 : MonoBehaviour
 {
- 
     //when colliding with a GameObject with the tag enemy this object gets distroyed 
     void OnCollisionEnter(Collision col)
     {
-        if (col.gameObject.tag == "enemy" && col.gameObject.layer == 11)
+        if (col.gameObject.tag == "enemy" && col.gameObject.layer == 12)
         {
-           
+
             Destroy(gameObject, 0.1f);
         }
     }
