@@ -13,11 +13,12 @@ public class MapVirtualization : MonoBehaviour
     private Light[] lights;
     private GameObject[] cubes;
     public int dimention; 
+    
     // Start is called before the first frame update
     void Start()
     {
-        digitalizeRandomMap();
-        StartCoroutine(IncreaseLight(40,5));
+        //digitalizeRandomMap();
+        //StartCoroutine(IncreaseLight(40,5));
         //StartCoroutine(MapChange());
     }
 
