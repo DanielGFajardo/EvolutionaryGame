@@ -16,6 +16,10 @@ public class CharacterMove : MonoBehaviour
     public Rigidbody firePrefab;
     public Transform fireEnd;
     private Animator anim;
+    public Transform trailEnd;
+    public Rigidbody trail1Prefab;
+    public Rigidbody trail2Prefab;
+    public Rigidbody trail3Prefab;
     // Start is called before the first frame update
     void Start()
     {
@@ -95,6 +99,40 @@ public class CharacterMove : MonoBehaviour
             //with direction and force
             fireInstance.AddForce(fireEnd.forward * 1000);
             
+        }
+
+        if (col.tag == "floor" && Input.GetKey(KeyCode.R))
+        {
+
+           
+            Rigidbody trailInstance;
+            //the instance will create the prfab at the given gameObject position 
+            trailInstance = Instantiate(trail1Prefab, trailEnd.position, trailEnd.rotation) as Rigidbody;
+            //with direction and force
+            trailInstance.AddForce(fireEnd.forward * 5);
+
+        }
+        if (col.tag == "floor" && Input.GetKey(KeyCode.Q))
+        {
+
+
+            Rigidbody trailInstance;
+            //the instance will create the prfab at the given gameObject position 
+            trailInstance = Instantiate(trail2Prefab, trailEnd.position, trailEnd.rotation) as Rigidbody;
+            //with direction and force
+            trailInstance.AddForce(fireEnd.forward * 5);
+
+        }
+        if (col.tag == "floor" && Input.GetKey(KeyCode.T))
+        {
+
+
+            Rigidbody trailInstance;
+            //the instance will create the prfab at the given gameObject position 
+            trailInstance = Instantiate(trail3Prefab, trailEnd.position, trailEnd.rotation) as Rigidbody;
+            //with direction and force
+            trailInstance.AddForce(fireEnd.forward * 5);
+
         }
     }
     //When the character reaches the "floor" after jumping can jump is set to true and the jump action is replaced by running or idle
