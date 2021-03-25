@@ -89,7 +89,7 @@ public class CharacterMove : MonoBehaviour
 
     void OnTriggerStay(Collider col)
     {
-        if (col.tag == "floor" && Input.GetKey(KeyCode.G))
+        if (col.tag == "floor" && Input.GetKey(KeyCode.C))
         {
 
             anim.SetTrigger("attack");
