@@ -15,7 +15,7 @@ public class NPCmove : MonoBehaviour
     private bool firedOn = false;
     public float tooClose = 60.0f;
     private Animator anima;
-
+    public bool boo;
 
 
     // Start is called before the first frame update
@@ -111,6 +111,17 @@ public class NPCmove : MonoBehaviour
     { // if collided with one of the beams which have puff tags coming from the unicorn's horn
         if (col.gameObject.tag == "puff")
         {
+            // go to walk mode by enabling this boolean
+            firedOn = true;
+            //and send the ghost back to position one so its far enough from us to break the pull attraction
+            transform.position = goal[0].position;
+        }
+    }
+    void OnTriggerEnter(Collider other)
+    { //they can't harm in shelters
+        if (other.gameObject.tag == "barrier")
+        {
+            boo = true;
             // go to walk mode by enabling this boolean
             firedOn = true;
             //and send the ghost back to position one so its far enough from us to break the pull attraction

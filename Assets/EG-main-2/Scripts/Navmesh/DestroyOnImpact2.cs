@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class DestroyOnImpact2 : MonoBehaviour
 {
+    public GameObject mapTrack;
     //when colliding with a GameObject with the tag enemy this object gets distroyed 
     void OnCollisionEnter(Collision col)
     {
-        if (col.gameObject.tag == "enemy" && col.gameObject.layer == 12)
+        if (col.gameObject.tag == "enemy" && col.gameObject.layer == 13)
         {
 
             Destroy(gameObject, 0.1f);
+           
+            
         }
     }
 }
