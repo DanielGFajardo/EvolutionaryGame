@@ -9,6 +9,8 @@ TagManager:
   - map
   - Minimap
   - barrier
+  - bullet
+  - puff
   layers:
   - Default
   - TransparentFX
