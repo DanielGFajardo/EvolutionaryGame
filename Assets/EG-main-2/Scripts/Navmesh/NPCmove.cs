@@ -16,14 +16,20 @@ public class NPCmove : MonoBehaviour
     public float tooClose = 60.0f;
     private Animator anima;
     public bool boo;
+    public int health;
+    public int maxHealth=30;
+    public HealthBar healthBar;
+    public CharacterMove playerControl;
 
 
     // Start is called before the first frame update
     void Start()
     {
-
+        health=maxHealth;
         //find player 
+        healthBar.SetMaxHealth(maxHealth);
         player = GameObject.FindWithTag("Player");
+        playerControl = player.GetComponent<CharacterMove>();
         //get the navMesh controller
         agent = GetComponent<NavMeshAgent>();
         //get access to animation
@@ -110,11 +116,21 @@ public class NPCmove : MonoBehaviour
     void OnCollisionEnter(Collision col)
     { // if collided with one of the beams which have puff tags coming from the unicorn's horn
         if (col.gameObject.tag == "puff")
-        {
-            // go to walk mode by enabling this boolean
-            firedOn = true;
-            //and send the ghost back to position one so its far enough from us to break the pull attraction
-            transform.position = goal[0].position;
+        {   
+            health = health - 5;
+            healthBar.SetHealth(health);
+            if(health==0){
+                // go to walk mode by enabling this boolean
+                firedOn = true;
+                //and send the ghost back to position one so its far enough from us to break the pull attraction
+                transform.position = goal[0].position;
+                health = maxHealth;
+                healthBar.SetHealth(maxHealth);
+            }
+        }
+        if (col.gameObject.tag == "Player")
+        {   
+            playerControl.takeDamage(10);
         }
     }
     void OnTriggerEnter(Collider other)
@@ -128,4 +144,6 @@ public class NPCmove : MonoBehaviour
             transform.position = goal[0].position;
         }
     }
+
+            
 }
