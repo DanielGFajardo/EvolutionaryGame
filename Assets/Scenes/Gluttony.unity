@@ -590,7 +590,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 110582541}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 74d01d104fa3e432480ed7ad55af99c0, type: 3}
   m_Name: 
@@ -599,6 +599,7 @@ MonoBehaviour:
   attackrange: 4
   maxHealth: 1000
   health: 1000
+  keyprefab: {fileID: 0}
   healthBar: {fileID: 112731398}
   playerControl: {fileID: 0}
 --- !u!195 &110582544

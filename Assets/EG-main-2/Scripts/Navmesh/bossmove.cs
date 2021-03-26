@@ -22,6 +22,8 @@ public class bossmove : MonoBehaviour
     public int maxHealth = 1000;
     public int health = 1000;
     private bool alive = true;
+
+    public Rigidbody keyprefab;
     public HealthBar healthBar;
     public CharacterMove playerControl;
 
@@ -109,21 +111,44 @@ public class bossmove : MonoBehaviour
 
     private Vector3 getRandomPosition()
     {
-        float posx = Random.Range(-20, 20);
-        float posz = Random.Range(-20, 20);
-
-        Vector3 randpos = new Vector3(posx, 0, posz);
+        Vector3 randpos = getRandomVector();
 
         isvalid = agent.CalculatePath(randpos, path);
         while (!isvalid)
         {
-            randpos = getRandomPosition();
+            randpos = getRandomVector();
             isvalid = agent.CalculatePath(randpos, path);
         }
 
         walkpoint = true;
         anim.SetBool("walk", true);
-        //print(randpos);
+        Debug.Log(randpos);
+
+        return randpos;
+    }
+
+    private Vector3 getRandomVector()
+    {
+        print("Here");
+        Vector3 randpos = new Vector3 (0,0,0);
+
+        float posx = Random.Range(-20, 20);
+        float posz = Random.Range(-20, 20);
+
+        float ax = transform.position.x;
+        float az = transform.position.z;
+
+        float newposx = ax + posx;
+        float newposz = az + posz;
+
+        if (newposx > -4f && newposx < 1f && newposz > -18f && newposz < -11f)
+        {
+           randpos = new Vector3(posx, 0, posz);
+        }
+        else
+        {
+            getRandomVector();
+        }
 
         return randpos;
     }
@@ -136,6 +161,8 @@ public class bossmove : MonoBehaviour
         yield return new WaitForSeconds(5f);
 
         Destroy(transform.gameObject);
+
+        Instantiate(keyprefab);
     }
 
     private void OnCollisionEnter(Collision col)

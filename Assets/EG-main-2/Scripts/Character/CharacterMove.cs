@@ -23,6 +23,9 @@ public class CharacterMove : MonoBehaviour
     public int maxHealth=1000;
     public int health;
     public HealthBar healthBar;
+    private int regenrate = 1;
+    private int damagerate = 2;
+    private int keynum = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -37,10 +40,15 @@ public class CharacterMove : MonoBehaviour
     {
         Move();
         Jump();
+        if (health < maxHealth)
+        {
+            StartCoroutine(Regen());
+        }
+        
        
     }
     public void takeDamage(int damage){
-        health = health - damage;
+        health = health - (damage) * damagerate;
         healthBar.SetHealth(health);
     }
     void Move()
@@ -142,6 +150,34 @@ public class CharacterMove : MonoBehaviour
             trailInstance.AddForce(fireEnd.forward * 5);
 
         }
+
+        if (col.tag == "shield")
+        {
+            damagerate = 1;
+        }
+
+        if (col.tag == "key")
+        {
+            keynum = keynum + 1;
+        }
+
+        if (col.tag == "potion")
+        {
+            regenrate = 2;
+        }
+
+
+    }
+
+    IEnumerator Regen()
+    {
+        yield return new WaitForSeconds(5f);
+
+        if(health < maxHealth)
+        {
+            health = (health + 5) * regenrate;
+        }
+       
     }
     //When the character reaches the "floor" after jumping can jump is set to true and the jump action is replaced by running or idle
     private void OnTriggerEnter(Collider other)
