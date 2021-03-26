@@ -20,9 +20,14 @@ public class CharacterMove : MonoBehaviour
     public Rigidbody trail1Prefab;
     public Rigidbody trail2Prefab;
     public Rigidbody trail3Prefab;
+    public int maxHealth=1000;
+    public int health;
+    public HealthBar healthBar;
     // Start is called before the first frame update
     void Start()
     {
+        health=maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
         rb = GetComponent<Rigidbody>();
         anim= gameObject.GetComponentInChildren<Animator>();
     }
@@ -34,7 +39,10 @@ public class CharacterMove : MonoBehaviour
         Jump();
        
     }
-
+    public void takeDamage(int damage){
+        health = health - damage;
+        healthBar.SetHealth(health);
+    }
     void Move()
     {
      //get the Axes 

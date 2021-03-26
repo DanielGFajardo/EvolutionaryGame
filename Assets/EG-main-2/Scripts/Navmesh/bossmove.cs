@@ -19,13 +19,17 @@ public class bossmove : MonoBehaviour
     private bool walkpoint;
     private Vector3 newpos;
 
+    public int maxHealth = 1000;
     public int health = 1000;
     private bool alive = true;
+    public HealthBar healthBar;
+    public CharacterMove playerControl;
 
     private void Start()
     {
-
+        healthBar.SetMaxHealth(maxHealth);
         player = GameObject.FindGameObjectWithTag("Player");
+        playerControl = player.GetComponent<CharacterMove>();
         agent = GetComponent<NavMeshAgent>();
         path = new NavMeshPath();
         anim = GetComponent<Animator>();
@@ -92,11 +96,13 @@ public class bossmove : MonoBehaviour
         if (health > 400)
         {
             anim.SetTrigger("attack1");
+            playerControl.takeDamage(10);
         }
 
         if (health < 401)
         {
             anim.SetTrigger("attack2");
+            playerControl.takeDamage(20);
         }
 
     }
@@ -136,8 +142,9 @@ public class bossmove : MonoBehaviour
     {
         if (col.gameObject.tag == "puff")
         {
-            health = health - 5;
-            print(health);
+            health = health - 10;
+
+            healthBar.SetHealth(health);
         }
     }
 
