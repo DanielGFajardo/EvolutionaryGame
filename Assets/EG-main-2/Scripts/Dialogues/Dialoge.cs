@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+//based on the tutorial https://www.youtube.com/watch?v=f-oSXg6_AMQ
 public class Dialoge : MonoBehaviour
 {
 

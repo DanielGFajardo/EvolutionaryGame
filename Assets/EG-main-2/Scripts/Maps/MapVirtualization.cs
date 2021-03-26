@@ -17,7 +17,7 @@ public class MapVirtualization : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //digitalizeRandomMap();
+        digitalizeRandomMap();
         //StartCoroutine(IncreaseLight(40,5));
         //StartCoroutine(MapChange());
     }
@@ -40,6 +40,7 @@ public class MapVirtualization : MonoBehaviour
         for (int i = 0; i <dimention; i++){
             for (int a = 0; a <dimention; a++){
                 if(mapValues[i*50+a] == "0.0"){
+                   
                     GameObject blockL1 = Instantiate(block1, new Vector3(i,0,a), block1.transform.rotation) as GameObject;
                     GameObject blockL2 = Instantiate(block1, new Vector3(i,1,a), block1.transform.rotation) as GameObject;
                     listOfLights.Add(blockL1.transform.GetChild(6).GetComponentInChildren<Light>());
