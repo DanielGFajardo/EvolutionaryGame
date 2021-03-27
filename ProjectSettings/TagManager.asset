@@ -9,8 +9,10 @@ TagManager:
   - map
   - Minimap
   - barrier
-  - bullet
   - puff
+  - key
+  - shield
+  - potion
   layers:
   - Default
   - TransparentFX

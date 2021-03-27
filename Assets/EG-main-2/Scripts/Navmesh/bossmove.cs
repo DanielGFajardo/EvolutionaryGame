@@ -9,21 +9,20 @@ public class bossmove : MonoBehaviour
     private NavMeshAgent agent;
     private GameObject player;
     private Animator anim;
+    public Transform[] patrolpoints;
 
     private float distance;
     public float sighteddistance = 6f;
     public float attackrange = 3f;
 
-    private NavMeshPath path;
-    private bool isvalid;
-    private bool walkpoint;
-    private Vector3 newpos;
+    private int nextpoint = 0;
 
     public int maxHealth = 1000;
     public int health = 1000;
     private bool alive = true;
 
-    public Rigidbody keyprefab;
+    public GameObject keyprefab;
+
     public HealthBar healthBar;
     public CharacterMove playerControl;
 
@@ -33,13 +32,13 @@ public class bossmove : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         playerControl = player.GetComponent<CharacterMove>();
         agent = GetComponent<NavMeshAgent>();
-        path = new NavMeshPath();
         anim = GetComponent<Animator>();
 
     }
 
     private void Update()
     {
+
         if (health == 0 && alive)
         {
             StartCoroutine(Die());
@@ -51,7 +50,7 @@ public class bossmove : MonoBehaviour
             distance = Vector3.Distance(transform.position, player.transform.position);
             //print(distance);
 
-            if (distance > sighteddistance) Patrol();
+            if (distance > sighteddistance && !agent.pathPending && agent.remainingDistance < 0.5f) Patrol();
             if (distance < sighteddistance && distance > attackrange) follow();
             if (distance < attackrange)
             {
@@ -67,24 +66,17 @@ public class bossmove : MonoBehaviour
 
     private void Patrol()
     {
+        // Returns if no points have been set up
+        if (patrolpoints.Length == 0)
+            return;
 
-        if (!walkpoint)
-        {
-            newpos = getRandomPosition();
-        }
-        if (walkpoint)
-        {
-            agent.SetDestination(newpos);
-        }
+        anim.SetBool("walk", true);
+        // Set the agent to go to the currently selected destination.
+        agent.destination = patrolpoints[nextpoint].position;
 
-        Vector3 distanceToWalkPoint = transform.position - newpos;
-
-        //Walkpoint reached
-        if (distanceToWalkPoint.magnitude < 1f)
-        {
-            walkpoint = false;
-            anim.SetBool("walk", false);
-        }
+        // Choose the next point in the array as the destination,
+        // cycling to the start if necessary.
+        nextpoint = Random.Range(0,patrolpoints.Length);
 
     }
 
@@ -109,50 +101,6 @@ public class bossmove : MonoBehaviour
 
     }
 
-    private Vector3 getRandomPosition()
-    {
-        Vector3 randpos = getRandomVector();
-
-        isvalid = agent.CalculatePath(randpos, path);
-        while (!isvalid)
-        {
-            randpos = getRandomVector();
-            isvalid = agent.CalculatePath(randpos, path);
-        }
-
-        walkpoint = true;
-        anim.SetBool("walk", true);
-        Debug.Log(randpos);
-
-        return randpos;
-    }
-
-    private Vector3 getRandomVector()
-    {
-        print("Here");
-        Vector3 randpos = new Vector3 (0,0,0);
-
-        float posx = Random.Range(-20, 20);
-        float posz = Random.Range(-20, 20);
-
-        float ax = transform.position.x;
-        float az = transform.position.z;
-
-        float newposx = ax + posx;
-        float newposz = az + posz;
-
-        if (newposx > -4f && newposx < 1f && newposz > -18f && newposz < -11f)
-        {
-           randpos = new Vector3(posx, 0, posz);
-        }
-        else
-        {
-            getRandomVector();
-        }
-
-        return randpos;
-    }
-
     IEnumerator Die()
     {
         anim.SetTrigger("dead");
@@ -160,9 +108,10 @@ public class bossmove : MonoBehaviour
 
         yield return new WaitForSeconds(5f);
 
+        Instantiate(keyprefab,transform.position,transform.rotation);
+
         Destroy(transform.gameObject);
 
-        Instantiate(keyprefab);
     }
 
     private void OnCollisionEnter(Collision col)

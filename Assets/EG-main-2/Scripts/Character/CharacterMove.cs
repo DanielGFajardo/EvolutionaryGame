@@ -16,6 +16,7 @@ public class CharacterMove : MonoBehaviour
     public Rigidbody firePrefab;
     public Transform fireEnd;
     private Animator anim;
+    public Transform fountain;
     public Transform trailEnd;
     public Rigidbody trail1Prefab;
     public Rigidbody trail2Prefab;
@@ -26,6 +27,7 @@ public class CharacterMove : MonoBehaviour
     private int regenrate = 1;
     private int damagerate = 2;
     private int keynum = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -165,17 +167,18 @@ public class CharacterMove : MonoBehaviour
         {
             regenrate = 2;
         }
-
-
     }
 
     IEnumerator Regen()
     {
         yield return new WaitForSeconds(5f);
+        float tofountain = Vector3.Distance(fountain.position, transform.position);
 
         if(health < maxHealth)
         {
-            health = (health + 5) * regenrate;
+            if (tofountain > 5f) health = (health + 1) * regenrate;
+            if (tofountain < 5f) health = (health + 5);
+
         }
        
     }
