@@ -27,8 +27,6 @@ public class CharacterMove : MonoBehaviour
     public HealthBar healthBar;
     private int regenrate = 1;
     private int damagerate = 2;
-    public MapVirtualization director;
-    public Vector3 startPosition;
 
     public int keynum = 0;
 
@@ -40,7 +38,6 @@ public class CharacterMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        startPosition = Player.position;
         health=maxHealth;
         healthBar.SetMaxHealth(maxHealth);
         rb = GetComponent<Rigidbody>();
@@ -49,7 +46,7 @@ public class CharacterMove : MonoBehaviour
         {
             icons[i].enabled = false;
         }
-        StartCoroutine(InstantiateFountain());
+        fountain = GameObject.Find("fountain(Clone").transform;
     }
 
     //Controls the movement of the character
@@ -57,25 +54,17 @@ public class CharacterMove : MonoBehaviour
     {
         Move();
         Jump();
-        
-        InvokeBoss(); 
-    }
-    void Update(){
         if (health < maxHealth)
         {
             StartCoroutine(Regen());
         }
+        InvokeBoss();
+        
+       
     }
     public void takeDamage(int damage){
-            health = health - (damage) * damagerate;
-            healthBar.SetHealth(health);
-            if(health <= 0){
-                print("Death");
-                Player.position = startPosition;
-                director.ChangeMap();
-                healthBar.SetHealth(maxHealth);
-                health = maxHealth;
-            }   
+        health = health - (damage) * damagerate;
+        healthBar.SetHealth(health);
     }
     void Move()
     {
@@ -193,32 +182,18 @@ public class CharacterMove : MonoBehaviour
         }
     }
 
-    IEnumerator InstantiateFountain()
-    {
-        yield return new WaitForSeconds(5);
-        fountain = GameObject.Find("fountain(Clone)").transform;
-       
-    }
-    
     IEnumerator Regen()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(5f);
         float tofountain = Vector3.Distance(fountain.position, transform.position);
 
         if(health < maxHealth)
         {
-            if (tofountain > 5f){
-                health = health + 1 * regenrate ;
-                healthBar.SetHealth(health);
-            } 
-            if (tofountain < 5f){
-                health = health + 3 * regenrate ;
-                healthBar.SetHealth(health);
-            } 
+            if (tofountain > 5f) health = (health + 1) * regenrate;
+            if (tofountain < 5f) health = (health + 5);
         }
        
     }
-    
 
     private void InvokeBoss()
     {

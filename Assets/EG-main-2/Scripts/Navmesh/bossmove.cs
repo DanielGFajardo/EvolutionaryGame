@@ -13,8 +13,8 @@ public class bossmove : MonoBehaviour
 
     private float distance;
     public float sighteddistance = 6f;
-    public float attackrange = 3f;
-
+    public float attackrange = 2f;
+    private bool attacked;
     private int nextpoint = 0;
 
     public int maxHealth = 1000;
@@ -58,7 +58,11 @@ public class bossmove : MonoBehaviour
             //print(distance);
 
             if (distance > sighteddistance && !agent.pathPending && agent.remainingDistance < 0.5f) Patrol();
-            if (distance < sighteddistance && distance > attackrange) follow();
+            if (distance < sighteddistance && distance > attackrange)
+            {
+                follow();
+                attacked = false;
+            }
             if (distance < attackrange)
             {
                 attack();
@@ -90,20 +94,24 @@ public class bossmove : MonoBehaviour
     private void follow()
     {
         agent.SetDestination(player.transform.position);
+        anim.SetBool("walk", true);
     }
 
     private void attack()
     {
-        if (health > 400)
+        if (health > 400 && !attacked)
         {
             anim.SetTrigger("attack1");
             playerControl.takeDamage(10);
+            attacked = true;
+            
         }
 
-        if (health < 401)
+        if (health < 401 && !attacked)
         {
             anim.SetTrigger("attack2");
             playerControl.takeDamage(20);
+            attacked = true;
         }
 
     }
