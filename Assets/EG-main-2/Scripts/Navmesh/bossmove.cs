@@ -34,6 +34,13 @@ public class bossmove : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
 
+        patrolpoints[0] = GameObject.Find("patrolpointsboss/point1").transform;
+        patrolpoints[1] = GameObject.Find("patrolpointsboss/point2").transform;
+        patrolpoints[2] = GameObject.Find("patrolpointsboss/point3").transform;
+        patrolpoints[3] = GameObject.Find("patrolpointsboss/point4").transform;
+        patrolpoints[4] = GameObject.Find("patrolpointsboss/point5").transform;
+        patrolpoints[5] = GameObject.Find("patrolpointsboss/point6").transform;
+
     }
 
     private void Update()

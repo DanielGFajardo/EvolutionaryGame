@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharacterMove : MonoBehaviour
 {
@@ -26,7 +27,13 @@ public class CharacterMove : MonoBehaviour
     public HealthBar healthBar;
     private int regenrate = 1;
     private int damagerate = 2;
-    private int keynum = 0;
+
+    public int keynum = 0;
+
+    [SerializeField] public RawImage[] icons;
+    public Transform door;
+    public GameObject bossprefab;
+    private bool bossinlevel;
 
     // Start is called before the first frame update
     void Start()
@@ -35,6 +42,11 @@ public class CharacterMove : MonoBehaviour
         healthBar.SetMaxHealth(maxHealth);
         rb = GetComponent<Rigidbody>();
         anim= gameObject.GetComponentInChildren<Animator>();
+        for (int i = 0; i< icons.Length; i++)
+        {
+            icons[i].enabled = false;
+        }
+        fountain = GameObject.Find("fountain(Clone").transform;
     }
 
     //Controls the movement of the character
@@ -46,6 +58,7 @@ public class CharacterMove : MonoBehaviour
         {
             StartCoroutine(Regen());
         }
+        InvokeBoss();
         
        
     }
@@ -178,10 +191,19 @@ public class CharacterMove : MonoBehaviour
         {
             if (tofountain > 5f) health = (health + 1) * regenrate;
             if (tofountain < 5f) health = (health + 5);
-
         }
        
     }
+
+    private void InvokeBoss()
+    {
+        if (keynum == 2 && !bossinlevel)
+        {
+            Instantiate(bossprefab,door.transform.position,door.rotation);
+            bossinlevel = true;
+        }
+    }
+
     //When the character reaches the "floor" after jumping can jump is set to true and the jump action is replaced by running or idle
     private void OnTriggerEnter(Collider other)
     {
