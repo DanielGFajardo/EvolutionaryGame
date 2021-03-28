@@ -13,6 +13,8 @@ public class MapVirtualization : MonoBehaviour
     private Light[] lights;
     private GameObject[] cubes;
     public int dimention; 
+    public GameObject EGOMAZE;
+    public GameObject shield;
     
     // Start is called before the first frame update
     void Start()
@@ -25,6 +27,7 @@ public class MapVirtualization : MonoBehaviour
     void digitalizeRandomMap(){
         DirectoryInfo dir = new DirectoryInfo("Assets/EG-main-2/Scripts/Maps/maps");
         FileInfo[] info = dir.GetFiles("*.*");
+        bool EGOAllcoated = false;
         int targetMap = Random.Range(1,info.Length/2);
         string data = System.IO.File.ReadAllText ("Assets/EG-main-2/Scripts/Maps/maps/map"+targetMap.ToString()+".csv");
         mapValues = data.Split(new char [] {',' , '\n' }, StringSplitOptions.RemoveEmptyEntries);
@@ -40,7 +43,6 @@ public class MapVirtualization : MonoBehaviour
         for (int i = 0; i <dimention; i++){
             for (int a = 0; a <dimention; a++){
                 if(mapValues[i*50+a] == "0.0"){
-                   
                     GameObject blockL1 = Instantiate(block1, new Vector3(i,0,a), block1.transform.rotation) as GameObject;
                     GameObject blockL2 = Instantiate(block1, new Vector3(i,1,a), block1.transform.rotation) as GameObject;
                     listOfLights.Add(blockL1.transform.GetChild(6).GetComponentInChildren<Light>());
@@ -50,6 +52,11 @@ public class MapVirtualization : MonoBehaviour
                 }
                 else if(mapValues[i*50+a] == "3.0"){
                     GameObject fountain1 = Instantiate(fountain, new Vector3(i,-0.81f,a),fountain.transform.rotation) as GameObject;
+                }
+                else if(mapValues[i*50+a] == "4.0" && !(EGOAllcoated)){
+                    shield.transform.position=new Vector3(i,-0.81f,a);
+                    EGOMAZE.transform.position=new Vector3(i,-0.81f,a);
+                    EGOAllcoated = true;
                 }
             }
         }
@@ -63,6 +70,10 @@ public class MapVirtualization : MonoBehaviour
         
         
         
+    }
+
+    public void ChangeMap(){
+        StartCoroutine(IncreaseLight(40,5));
     }
 
     IEnumerator MapChange(){

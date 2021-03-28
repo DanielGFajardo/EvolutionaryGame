@@ -103,11 +103,12 @@ public class NPCmove : MonoBehaviour
         float run = Vector3.Distance(transform.position, player.transform.position);
         // if it is less then 30f then ...
        // anim.Play("run");
-        if (run < 30.0f)
+        if (run < 0.5f)
         {
             //animation
             anim.Play("attack");
             anima.SetTrigger("hopp");
+            playerControl.takeDamage(10);
         }
     }
     public enum NPC { walk, attack }
@@ -127,10 +128,6 @@ public class NPCmove : MonoBehaviour
                 health = maxHealth;
                 healthBar.SetHealth(maxHealth);
             }
-        }
-        if (col.gameObject.tag == "Player")
-        {   
-            playerControl.takeDamage(10);
         }
     }
     void OnTriggerEnter(Collider other)

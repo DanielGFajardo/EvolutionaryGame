@@ -2247,6 +2247,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 395270655}
   m_CullTransparentMesh: 0
+--- !u!114 &403166657 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -1837156386529289400, guid: 68e1d8d1cebb748e8a91944f72056ad9,
+    type: 3}
+  m_PrefabInstance: {fileID: 1270589911}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edabbf56730cd4bfdbfbbc14d7df9d21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &407646706
 GameObject:
   m_ObjectHideFlags: 0
@@ -6595,7 +6607,7 @@ PrefabInstance:
     - target: {fileID: -1837156386529289400, guid: 68e1d8d1cebb748e8a91944f72056ad9,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2366442809308013811, guid: 68e1d8d1cebb748e8a91944f72056ad9,
         type: 3}
@@ -17220,6 +17232,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7506576791049282439, guid: 1ea04d287797a46de87efd4922341c59,
         type: 3}
+      propertyPath: director
+      value: 
+      objectReference: {fileID: 403166657}
+    - target: {fileID: 7506576791049282439, guid: 1ea04d287797a46de87efd4922341c59,
+        type: 3}
       propertyPath: trailEnd
       value: 
       objectReference: {fileID: 2041856297}
@@ -17228,6 +17245,11 @@ PrefabInstance:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 866858119}
+    - target: {fileID: 7506576791049282439, guid: 1ea04d287797a46de87efd4922341c59,
+        type: 3}
+      propertyPath: maxHealth
+      value: 1000
+      objectReference: {fileID: 0}
     - target: {fileID: 7506576791049282439, guid: 1ea04d287797a46de87efd4922341c59,
         type: 3}
       propertyPath: bossprefab

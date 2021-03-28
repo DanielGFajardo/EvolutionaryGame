@@ -22,11 +22,13 @@ public class CharacterMove : MonoBehaviour
     public Rigidbody trail1Prefab;
     public Rigidbody trail2Prefab;
     public Rigidbody trail3Prefab;
-    public int maxHealth=1000;
+    public int maxHealth=10;
     public int health;
     public HealthBar healthBar;
     private int regenrate = 1;
     private int damagerate = 2;
+    public MapVirtualization director;
+    public Vector3 startPosition;
 
     public int keynum = 0;
 
@@ -38,6 +40,7 @@ public class CharacterMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        startPosition = Player.position;
         health=maxHealth;
         healthBar.SetMaxHealth(maxHealth);
         rb = GetComponent<Rigidbody>();
@@ -46,7 +49,7 @@ public class CharacterMove : MonoBehaviour
         {
             icons[i].enabled = false;
         }
-        fountain = GameObject.Find("fountain(Clone").transform;
+        //fountain = GameObject.Find("fountain(Clone)").transform;
     }
 
     //Controls the movement of the character
@@ -56,15 +59,20 @@ public class CharacterMove : MonoBehaviour
         Jump();
         if (health < maxHealth)
         {
-            StartCoroutine(Regen());
+            //StartCoroutine(Regen());
         }
-        InvokeBoss();
-        
-       
+        InvokeBoss(); 
     }
     public void takeDamage(int damage){
-        health = health - (damage) * damagerate;
-        healthBar.SetHealth(health);
+            health = health - (damage) * damagerate;
+            healthBar.SetHealth(health);
+            if(health <= 0){
+                print("Death");
+                Player.position = startPosition;
+                director.ChangeMap();
+                healthBar.SetHealth(maxHealth);
+                health = maxHealth;
+            }   
     }
     void Move()
     {
@@ -182,9 +190,9 @@ public class CharacterMove : MonoBehaviour
         }
     }
 
+    /*
     IEnumerator Regen()
     {
-        yield return new WaitForSeconds(5f);
         float tofountain = Vector3.Distance(fountain.position, transform.position);
 
         if(health < maxHealth)
@@ -194,6 +202,7 @@ public class CharacterMove : MonoBehaviour
         }
        
     }
+    */
 
     private void InvokeBoss()
     {
