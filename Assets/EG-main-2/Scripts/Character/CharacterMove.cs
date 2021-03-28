@@ -22,7 +22,7 @@ public class CharacterMove : MonoBehaviour
     public Rigidbody trail1Prefab;
     public Rigidbody trail2Prefab;
     public Rigidbody trail3Prefab;
-    public int maxHealth=10;
+    public int maxHealth=1000;
     public int health;
     public HealthBar healthBar;
     private int regenrate = 1;
@@ -49,7 +49,7 @@ public class CharacterMove : MonoBehaviour
         {
             icons[i].enabled = false;
         }
-        //fountain = GameObject.Find("fountain(Clone)").transform;
+        StartCoroutine(InstantiateFountain());
     }
 
     //Controls the movement of the character
@@ -57,11 +57,14 @@ public class CharacterMove : MonoBehaviour
     {
         Move();
         Jump();
+        
+        InvokeBoss(); 
+    }
+    void Update(){
         if (health < maxHealth)
         {
-            //StartCoroutine(Regen());
+            StartCoroutine(Regen());
         }
-        InvokeBoss(); 
     }
     public void takeDamage(int damage){
             health = health - (damage) * damagerate;
@@ -190,19 +193,32 @@ public class CharacterMove : MonoBehaviour
         }
     }
 
-    /*
+    IEnumerator InstantiateFountain()
+    {
+        yield return new WaitForSeconds(5);
+        fountain = GameObject.Find("fountain(Clone)").transform;
+       
+    }
+    
     IEnumerator Regen()
     {
+        yield return new WaitForSeconds(1);
         float tofountain = Vector3.Distance(fountain.position, transform.position);
 
         if(health < maxHealth)
         {
-            if (tofountain > 5f) health = (health + 1) * regenrate;
-            if (tofountain < 5f) health = (health + 5);
+            if (tofountain > 5f){
+                health = health + 1 * regenrate ;
+                healthBar.SetHealth(health);
+            } 
+            if (tofountain < 5f){
+                health = health + 3 * regenrate ;
+                healthBar.SetHealth(health);
+            } 
         }
        
     }
-    */
+    
 
     private void InvokeBoss()
     {
